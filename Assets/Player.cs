@@ -18,10 +18,13 @@ public class Player : MonoBehaviour {
 		if(Input.GetMouseButtonDown(0)){
 			Vector3 position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 			position.z = 0;
-			Debug.Log(position);
 			position = new Vector3(Mathf.Round(position.x),Mathf.Round(position.y/1.5f)*1.5f,0);
-			Debug.Log(position);
 			Instantiate(card,position,Quaternion.identity);
 		}
+	}
+
+	void OnTriggerEnter2D(Collider2D other){
+		//detect if other is a "laser"
+		//if so, minus one hp
 	}
 }
