@@ -1,0 +1,27 @@
+﻿using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+
+public class Player : MonoBehaviour {
+
+	public GameObject card = null;
+	//public Camera camera;
+	// Use this for initialization
+	void Start(){
+	
+	}
+	
+	// Update is called once per frame
+	void Update(){
+		//0 is left click
+		//1 is right click
+		if(Input.GetMouseButtonDown(0)){
+			Vector3 position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+			position.z = 0;
+			Debug.Log(position);
+			position = new Vector3(Mathf.Round(position.x),Mathf.Round(position.y/1.5f)*1.5f,0);
+			Debug.Log(position);
+			Instantiate(card,position,Quaternion.identity);
+		}
+	}
+}
