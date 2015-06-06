@@ -18,7 +18,7 @@ public class Player : MonoBehaviour {
 		if(Input.GetMouseButtonDown(0)){
 			Vector3 position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 			position.z = 0;
-			position = new Vector3(Mathf.Round(position.x),Mathf.Round(position.y/1.5f)*1.5f,0);
+			position = new Vector3(Mathf.Round(position.x/3)*3,Mathf.Round(position.y/3)*3,0);
 			Instantiate(card,position,Quaternion.identity);
 		}
 	}
