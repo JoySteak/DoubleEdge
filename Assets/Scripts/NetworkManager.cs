@@ -49,6 +49,6 @@ public class NetworkManager : MonoBehaviour
 			// Instantiate what's needed for MasterClient
 		}
 
-		PhotonNetwork.Instantiate("Player", Vector3.zero, Quaternion.identity, 0);
+		PhotonNetwork.Instantiate("Player", Vector3.zero, Quaternion.identity, 0, new object[]{1});
 	}
 }

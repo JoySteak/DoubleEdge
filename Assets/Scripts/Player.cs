@@ -7,10 +7,14 @@ public class Player : Photon.MonoBehaviour {
 	public GameObject card = null;
 	public bool canPlace = true;
 	public bool hasPlaced = false;
+
+	private int player = 1;
+
 	//public Camera camera;
 	// Use this for initialization
 	void Start(){
-	
+		player = (int)photonView.instantiationData[0];
+		SetUpPlayerPosition (player);
 	}
 	
 	// Update is called once per frame
@@ -32,6 +36,65 @@ public class Player : Photon.MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other){
 		//detect if other is a "laser"
 		//if so, minus one hp
+	}
+
+	void SetUpPlayerPosition(int player){
+		GameObject tmpHorGridObj = GameObject.Find("HorGrid");
+		GameObject tmpVerGridObj = GameObject.Find("VerGrid");
+
+		Vector3 scale;
+		Vector3 position;
+
+		switch (player) {
+		case 0:
+			scale = new Vector3(tmpHorGridObj.transform.localScale.x, 
+	                            0.5f,
+	                            tmpHorGridObj.transform.localScale.z);
+
+			position = new Vector3(tmpHorGridObj.transform.position.x, 
+	                               tmpVerGridObj.transform.localScale.y * -0.6f,
+	                               tmpHorGridObj.transform.localScale.z);
+
+			transform.localScale = scale;
+			transform.position = position;
+			break;
+		case 1:
+			scale = new Vector3(0.5f, 
+			                    tmpVerGridObj.transform.localScale.y,
+			                    tmpVerGridObj.transform.localScale.z);
+			
+			position = new Vector3(tmpHorGridObj.transform.localScale.x * -0.6f, 
+			                       tmpVerGridObj.transform.position.y,
+			                       tmpVerGridObj.transform.localScale.z);
+			
+			transform.localScale = scale;
+			transform.position = position;
+			break;
+		case 2:
+			scale = new Vector3(tmpHorGridObj.transform.localScale.x, 
+			                    0.5f,
+			                    tmpHorGridObj.transform.localScale.z);
+			
+			position = new Vector3(tmpHorGridObj.transform.position.x, 
+			                       tmpVerGridObj.transform.localScale.y * 0.6f,
+			                       tmpHorGridObj.transform.localScale.z);
+			
+			transform.localScale = scale;
+			transform.position = position;
+			break;
+		case 3:
+			scale = new Vector3(0.5f, 
+			                    tmpVerGridObj.transform.localScale.y,
+			                    tmpVerGridObj.transform.localScale.z);
+			
+			position = new Vector3(tmpHorGridObj.transform.localScale.x * 0.6f, 
+			                       tmpVerGridObj.transform.position.y,
+			                       tmpVerGridObj.transform.localScale.z);
+			
+			transform.localScale = scale;
+			transform.position = position;
+			break;
+		}
 	}
 
 	[RPC]
