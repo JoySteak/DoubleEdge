@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class Player : Photon.MonoBehaviour {
 
 	public GameObject card = null;
-	public bool canPlace = true;
+	//public bool canPlace = true;
 	public bool hasPlaced = false;
 
 	public enum PlayerCount {
@@ -30,7 +30,7 @@ public class Player : Photon.MonoBehaviour {
 	// Update is called once per frame
 	void Update(){
 		//check (from GameManager?) if it's at the placing phase
-		if(canPlace){
+		if(!hasPlaced){
 		//0 is left click
 		//1 is right click
 			if(Input.GetMouseButtonDown(0)){
