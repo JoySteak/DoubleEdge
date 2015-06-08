@@ -18,9 +18,9 @@ public class CardScript : Photon.MonoBehaviour {
 
 	// Use this for initialization
 	void Start(){
-<<<<<<< HEAD
+
 		m_GameManager = GameObject.Find("GameManager");
-=======
+
 		Quaternion tmpRotation;
 		switch (m_type) {
 		case CardType.Arrow:
@@ -37,7 +37,7 @@ public class CardScript : Photon.MonoBehaviour {
 			transform.rotation = tmpRotation;
 			break;
 		}
->>>>>>> f4cc1674fd2254546cf4ebd65b48f3a9ca9631c4
+
 	}
 	
 	// Update is called once per frame
