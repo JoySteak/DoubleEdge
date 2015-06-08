@@ -21,5 +21,6 @@ public class CardScript : MonoBehaviour {
 		//if all players hasplaced
 		//all arrow cards spawn object in x+ direction at same speed
 
+
 	}
 }
