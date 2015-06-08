@@ -33,6 +33,31 @@ public class Player : Photon.MonoBehaviour {
 	// Update is called once per frame
 	void Update(){
 		//check (from GameManager?) if it's at the placing phase
+		if(Input.GetKeyDown(KeyCode.C) && m_cardType == CardScript.CardType.Arrow){
+			m_cardType = CardScript.CardType.Mirror;
+		}else if(Input.GetKeyDown(KeyCode.C) && m_cardType == CardScript.CardType.Mirror){
+			m_cardType = CardScript.CardType.Arrow;
+		}
+		
+		if(Input.GetKeyDown(KeyCode.Alpha1) && m_cardType == CardScript.CardType.Arrow){
+			m_arrowType = CardScript.ArrowType.One;
+		}else if(Input.GetKeyDown(KeyCode.Alpha2) && m_cardType == CardScript.CardType.Arrow){
+			m_arrowType = CardScript.ArrowType.Two;
+		}else if(Input.GetKeyDown(KeyCode.Alpha3) && m_cardType == CardScript.CardType.Arrow){
+			m_arrowType = CardScript.ArrowType.Three;
+		}else if(Input.GetKeyDown(KeyCode.Alpha4) && m_cardType == CardScript.CardType.Arrow){
+			m_arrowType = CardScript.ArrowType.Four;
+		}
+		if(Input.GetKeyDown(KeyCode.Alpha1) && m_cardType == CardScript.CardType.Mirror){
+			m_mirrorType = CardScript.MirrorType.One;
+		}else if(Input.GetKeyDown(KeyCode.Alpha2) && m_cardType == CardScript.CardType.Mirror){
+			m_mirrorType = CardScript.MirrorType.Two;
+		}else if(Input.GetKeyDown(KeyCode.Alpha3) && m_cardType == CardScript.CardType.Mirror){
+			m_mirrorType = CardScript.MirrorType.Three;
+		}else if(Input.GetKeyDown(KeyCode.Alpha4) && m_cardType == CardScript.CardType.Mirror){
+			m_mirrorType = CardScript.MirrorType.Four;
+		}
+
 		if(!hasPlaced){
 		//0 is left click
 		//1 is right click
