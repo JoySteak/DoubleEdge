@@ -30,29 +30,51 @@ public class CardColliderScript : MonoBehaviour
 			// Only if mirror do the following checks
 			switch(m_cardColliderType){
 			case CardColliderType.East:
-				if(m_parentCardScript.m_mirrorType == CardScript.MirrorType.One
-				   || m_parentCardScript.m_mirrorType == CardScript.MirrorType.Four) {
+				if(m_parentCardScript.m_mirrorType == CardScript.MirrorType.One) {
 					other.GetComponent<PhotonView>().RPC("RemoteProjectileRotation", 
 					                                     PhotonTargets.AllViaServer, 
 					                                     new object[]{90});
 				}
+				else if(m_parentCardScript.m_mirrorType == CardScript.MirrorType.One) {
+					other.GetComponent<PhotonView>().RPC("RemoteProjectileRotation", 
+					                                     PhotonTargets.AllViaServer, 
+					                                     new object[]{-90});
+				}
 				break;
 			case CardColliderType.South:
-				if(m_parentCardScript.m_mirrorType == CardScript.MirrorType.One
-				   || m_parentCardScript.m_mirrorType == CardScript.MirrorType.Four) {
-					
+				if(m_parentCardScript.m_mirrorType == CardScript.MirrorType.Three) {
+					other.GetComponent<PhotonView>().RPC("RemoteProjectileRotation", 
+					                                     PhotonTargets.AllViaServer, 
+					                                     new object[]{90});
+				}
+				else if(m_parentCardScript.m_mirrorType == CardScript.MirrorType.Four) {
+					other.GetComponent<PhotonView>().RPC("RemoteProjectileRotation", 
+					                                     PhotonTargets.AllViaServer, 
+					                                     new object[]{-90});
 				}
 				break;
 			case CardColliderType.West:
-				if(m_parentCardScript.m_mirrorType == CardScript.MirrorType.One
-				   || m_parentCardScript.m_mirrorType == CardScript.MirrorType.Four) {
-					
+				if(m_parentCardScript.m_mirrorType == CardScript.MirrorType.Two) {
+					other.GetComponent<PhotonView>().RPC("RemoteProjectileRotation", 
+					                                     PhotonTargets.AllViaServer, 
+					                                     new object[]{90});
+				}
+				else if(m_parentCardScript.m_mirrorType == CardScript.MirrorType.Three) {
+					other.GetComponent<PhotonView>().RPC("RemoteProjectileRotation", 
+					                                     PhotonTargets.AllViaServer, 
+					                                     new object[]{-90});
 				}
 				break;
 			case CardColliderType.North:
-				if(m_parentCardScript.m_mirrorType == CardScript.MirrorType.One
-				   || m_parentCardScript.m_mirrorType == CardScript.MirrorType.Four) {
-					
+				if(m_parentCardScript.m_mirrorType == CardScript.MirrorType.One) {
+					other.GetComponent<PhotonView>().RPC("RemoteProjectileRotation", 
+					                                     PhotonTargets.AllViaServer, 
+					                                     new object[]{270});
+				}
+				else if(m_parentCardScript.m_mirrorType == CardScript.MirrorType.Two) {
+					other.GetComponent<PhotonView>().RPC("RemoteProjectileRotation", 
+					                                     PhotonTargets.AllViaServer, 
+					                                     new object[]{90});
 				}
 				break;
 			}

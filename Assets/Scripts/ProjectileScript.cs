@@ -18,7 +18,6 @@ public class ProjectileScript : Photon.MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other){
 		if(other.tag == "Player"){
-			Debug.Log ("aaa");
 			Destroy(this.gameObject);
 		}
 	}
@@ -28,7 +27,5 @@ public class ProjectileScript : Photon.MonoBehaviour {
 		Vector3 tmpRotation = transform.localEulerAngles;
 		tmpRotation.z += turnAngle;
 		transform.localEulerAngles = tmpRotation;
-
-		Debug.Log (transform.rotation.z + "");
 	}
 }
