@@ -4,6 +4,7 @@ using System.Collections;
 public class GameManager : MonoBehaviour {
 
 	// Use this for initialization
+
 	void Start(){
 	
 	}
@@ -18,4 +19,8 @@ public class GameManager : MonoBehaviour {
 		//change can place into true, has placed into false
 	
 	}
+
+	/*bool endTurn(){
+			
+	}*/
 }
