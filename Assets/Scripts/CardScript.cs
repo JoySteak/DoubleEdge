@@ -38,27 +38,10 @@ public class CardScript : Photon.MonoBehaviour {
 	void Start(){
 
 		m_GameManager = GameObject.Find("GameManager");
+	
 
-<<<<<<< HEAD
-		Vector3 tmpRotation;
-		switch (m_cardType) {
-		case CardType.Arrow:
-			GetComponent<SpriteRenderer>().sprite = m_sprites[0];
-			tmpRotation = transform.localEulerAngles;
-			tmpRotation.z = -90.0f;
-			transform.localEulerAngles = tmpRotation;
-			photonView.RPC ("ShootProjectile", PhotonTargets.AllViaServer, new object[]{});
-			break;
-		case CardType.Mirror:
-			GetComponent<SpriteRenderer>().sprite = m_sprites[1];
-			tmpRotation = transform.localEulerAngles;
-			tmpRotation.z = -90.0f;
-			transform.localEulerAngles = tmpRotation;
-			break;
-		}
-=======
 		Vector3 tmpRotation = transform.localEulerAngles;
->>>>>>> 6a7f957fdba771c7298c14ef97f271824e04df3b
+
 
 		if (m_cardType == CardType.Arrow) {
 			switch (m_arrowType) {
