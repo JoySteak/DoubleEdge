@@ -8,13 +8,22 @@ public class Player : Photon.MonoBehaviour {
 	public bool canPlace = true;
 	public bool hasPlaced = false;
 
-	private int player = 1;
+	public enum PlayerCount {
+		One = 1,
+		Two,
+		Three,
+		Four
+	};
+
+	public PlayerCount player;
 
 	//public Camera camera;
 	// Use this for initialization
 	void Start(){
-		player = (int)photonView.instantiationData[0];
+		player = (PlayerCount)photonView.instantiationData[0];
 		SetUpPlayerPosition (player);
+
+		GameManager.current.players.Add(gameObject);
 	}
 	
 	// Update is called once per frame
@@ -38,7 +47,7 @@ public class Player : Photon.MonoBehaviour {
 		//if so, minus one hp
 	}
 
-	void SetUpPlayerPosition(int player){
+	void SetUpPlayerPosition(PlayerCount player){
 		GameObject tmpHorGridObj = GameObject.Find("HorGrid");
 		GameObject tmpVerGridObj = GameObject.Find("VerGrid");
 
@@ -46,7 +55,7 @@ public class Player : Photon.MonoBehaviour {
 		Vector3 position;
 
 		switch (player) {
-		case 0:
+		case PlayerCount.One:
 			scale = new Vector3(tmpHorGridObj.transform.localScale.x, 
 	                            0.5f,
 	                            tmpHorGridObj.transform.localScale.z);
@@ -58,7 +67,7 @@ public class Player : Photon.MonoBehaviour {
 			transform.localScale = scale;
 			transform.position = position;
 			break;
-		case 1:
+		case PlayerCount.Two:
 			scale = new Vector3(0.5f, 
 			                    tmpVerGridObj.transform.localScale.y,
 			                    tmpVerGridObj.transform.localScale.z);
@@ -70,7 +79,7 @@ public class Player : Photon.MonoBehaviour {
 			transform.localScale = scale;
 			transform.position = position;
 			break;
-		case 2:
+		case PlayerCount.Three:
 			scale = new Vector3(tmpHorGridObj.transform.localScale.x, 
 			                    0.5f,
 			                    tmpHorGridObj.transform.localScale.z);
@@ -82,7 +91,7 @@ public class Player : Photon.MonoBehaviour {
 			transform.localScale = scale;
 			transform.position = position;
 			break;
-		case 3:
+		case PlayerCount.Four:
 			scale = new Vector3(0.5f, 
 			                    tmpVerGridObj.transform.localScale.y,
 			                    tmpVerGridObj.transform.localScale.z);
