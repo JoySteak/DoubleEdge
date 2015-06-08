@@ -12,7 +12,16 @@ public class CardScript : Photon.MonoBehaviour {
 		Mirror
 	}
 
-	public CardType m_type = CardType.Mirror;
+	public enum MirrorType
+	{
+		One = 0,
+		Two,
+		Three,
+		Four
+	};
+
+	public CardType m_cardType = CardType.Mirror;
+	public MirrorType m_mirrorType = MirrorType.One;
 
 	public Sprite[] m_sprites = new Sprite[2]; 
 
@@ -22,7 +31,7 @@ public class CardScript : Photon.MonoBehaviour {
 		m_GameManager = GameObject.Find("GameManager");
 
 		Quaternion tmpRotation;
-		switch (m_type) {
+		switch (m_cardType) {
 		case CardType.Arrow:
 			GetComponent<SpriteRenderer>().sprite = m_sprites[0];
 			tmpRotation = transform.rotation;

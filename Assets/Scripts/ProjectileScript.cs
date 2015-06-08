@@ -21,4 +21,10 @@ public class ProjectileScript : MonoBehaviour {
 			Destroy(this.gameObject);
 		}
 	}
+
+	[RPC]
+	public void RemoteProjectileRotation(int turnAngle){
+		Quaternion tmpRotation = transform.rotation;
+		tmpRotation.z += turnAngle;
+	}
 }
