@@ -37,6 +37,10 @@ public class CardScript : Photon.MonoBehaviour {
 	// Use this for initialization
 	void Start(){
 
+		m_cardType = (CardType)photonView.instantiationData [0];
+		m_arrowType = (ArrowType)photonView.instantiationData [1];
+		m_mirrorType = (MirrorType)photonView.instantiationData [2];
+
 		m_GameManager = GameObject.Find("GameManager");
 	
 
@@ -58,8 +62,8 @@ public class CardScript : Photon.MonoBehaviour {
 				tmpRotation.z = -90.0f;
 				break;
 			}
-			photonView.RPC("RemoteSetupCard", PhotonTargets.AllBufferedViaServer, new object[]{0, tmpRotation});
-			ShootProjectile();
+			photonView.RPC("RemoteSetupCard", PhotonTargets.AllViaServer, new object[]{0, tmpRotation});
+//			ShootProjectile();
 		} else {
 			switch (m_mirrorType) {
 			case MirrorType.One:
@@ -75,7 +79,7 @@ public class CardScript : Photon.MonoBehaviour {
 				tmpRotation.z = -90.0f;
 				break;
 			}
-			photonView.RPC("RemoteSetupCard", PhotonTargets.AllBufferedViaServer, new object[]{1, tmpRotation});
+			photonView.RPC("RemoteSetupCard", PhotonTargets.AllViaServer, new object[]{1, tmpRotation});
 		}
 	}
 	

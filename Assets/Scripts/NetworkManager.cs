@@ -6,7 +6,7 @@ public class NetworkManager : Photon.MonoBehaviour
 {
 	public static NetworkManager current;
 
-	private string roomName = "Double Edge KevinS";
+	private string roomName = "Double Edge KevinSS";
 	private bool isVisible = true;
 	private bool isOpen = true;
 	private int maxPlayers = 4;

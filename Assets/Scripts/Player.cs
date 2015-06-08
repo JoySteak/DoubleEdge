@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 public class Player : Photon.MonoBehaviour {
 
-	public GameObject card = null;
 	//public bool canPlace = true;
 	public bool hasPlaced = false;
 
@@ -16,6 +15,10 @@ public class Player : Photon.MonoBehaviour {
 	};
 
 	public PlayerCount player;
+
+	public CardScript.CardType m_cardType;
+	public CardScript.ArrowType m_arrowType;
+	public CardScript.MirrorType m_mirrorType;
 
 	//public Camera camera;
 	// Use this for initialization
@@ -110,6 +113,10 @@ public class Player : Photon.MonoBehaviour {
 
 	[RPC]
 	void MasterClientInstantiateCard(Vector3 position){
-		PhotonNetwork.InstantiateSceneObject("Card", position, Quaternion.identity, 0, null);
+		PhotonNetwork.InstantiateSceneObject("Card", 
+		                                     position, 
+		                                     Quaternion.identity, 
+		                                     0, 
+		                                     new object[]{(int)m_cardType, (int)m_arrowType, (int)m_mirrorType,});
 	}
 }
