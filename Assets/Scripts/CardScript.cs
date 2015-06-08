@@ -15,7 +15,7 @@ public class CardScript : Photon.MonoBehaviour {
 
 	// Use this for initialization
 	void Start(){
-	
+		photonView.RPC ("ShootProjectile", PhotonTargets.AllViaServer, new object[]{});
 	}
 	
 	// Update is called once per frame
@@ -23,7 +23,6 @@ public class CardScript : Photon.MonoBehaviour {
 	
 		//if all players hasplaced
 		//all arrow cards spawn object in x+ direction at same speed
-		photonView.RPC ("ShootProjectile",PhotonTargets.AllViaServer,new object[]{});
 
 	}
 

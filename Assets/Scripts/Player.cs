@@ -24,6 +24,7 @@ public class Player : Photon.MonoBehaviour {
 		SetUpPlayerPosition (player);
 
 		GameManager.current.players.Add(gameObject);
+		Debug.Log ("Call");
 	}
 	
 	// Update is called once per frame

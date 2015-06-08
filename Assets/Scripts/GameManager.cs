@@ -24,12 +24,6 @@ public class GameManager : MonoBehaviour {
 		//the objects move
 		//if no more "balls" on board
 		//change can place into true, has placed into false
-
-		if(Input.GetKey (KeyCode.P)){
-			for(int i = 0; i < players.Capacity; i++){
-				Debug.Log("Player - " + (int)players[i].GetComponent<Player>().player);
-			}
-		}
 	}
 
 	/*bool endTurn(){
