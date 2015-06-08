@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class NetworkManager : MonoBehaviour
+public class NetworkManager : Photon.MonoBehaviour
 {
 	public static NetworkManager current;
 
@@ -11,7 +11,6 @@ public class NetworkManager : MonoBehaviour
 	private bool isOpen = true;
 	private int maxPlayers = 4;
 	public bool isRoomMaster = false;
-	public List<GameObject> playerList = new List<GameObject>();
 
 	void Awake(){
 		current = this;
@@ -51,7 +50,6 @@ public class NetworkManager : MonoBehaviour
 			// Instantiate what's needed for MasterClient
 		}
 
-		var newPlayer = PhotonNetwork.Instantiate("Player", Vector3.zero, Quaternion.identity, 0, new object[]{1});
-		playerList.Add(newPlayer);
+		PhotonNetwork.Instantiate("Player", Vector3.zero, Quaternion.identity, 0, new object[]{(int)PhotonNetwork.room.playerCount});
 	}
 }
