@@ -12,11 +12,32 @@ public class CardScript : Photon.MonoBehaviour {
 		Mirror
 	}
 
-	public CardType m_type = CardType.Arrow;
+	public CardType m_type = CardType.Mirror;
+
+	public Sprite[] m_sprites = new Sprite[2]; 
 
 	// Use this for initialization
 	void Start(){
+<<<<<<< HEAD
 		m_GameManager = GameObject.Find("GameManager");
+=======
+		Quaternion tmpRotation;
+		switch (m_type) {
+		case CardType.Arrow:
+			GetComponent<SpriteRenderer>().sprite = m_sprites[0];
+			tmpRotation = transform.rotation;
+			tmpRotation.z = -90.0f;
+			transform.rotation = tmpRotation;
+			photonView.RPC ("ShootProjectile", PhotonTargets.AllViaServer, new object[]{});
+			break;
+		case CardType.Mirror:
+			GetComponent<SpriteRenderer>().sprite = m_sprites[1];
+			tmpRotation = transform.rotation;
+			tmpRotation.z = -90.0f;
+			transform.rotation = tmpRotation;
+			break;
+		}
+>>>>>>> f4cc1674fd2254546cf4ebd65b48f3a9ca9631c4
 	}
 	
 	// Update is called once per frame
