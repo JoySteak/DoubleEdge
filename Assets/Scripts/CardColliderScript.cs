@@ -24,13 +24,17 @@ public class CardColliderScript : MonoBehaviour
 	}
 
 	void OnTriggerEnter2D(Collider2D other){
+		Debug.Log (" collided");
 		if(m_parentCardScript.m_cardType == CardScript.CardType.Mirror && other.tag == "Projectile"){
+			Debug.Log ("Projectile collided");
 			// Only if mirror do the following checks
 			switch(m_cardColliderType){
 			case CardColliderType.East:
 				if(m_parentCardScript.m_mirrorType == CardScript.MirrorType.One
 				   || m_parentCardScript.m_mirrorType == CardScript.MirrorType.Four) {
-
+					other.GetComponent<PhotonView>().RPC("RemoteProjectileRotation", 
+					                                     PhotonTargets.AllViaServer, 
+					                                     new object[]{90});
 				}
 				break;
 			case CardColliderType.South:

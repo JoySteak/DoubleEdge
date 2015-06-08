@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ProjectileScript : MonoBehaviour {
+public class ProjectileScript : Photon.MonoBehaviour {
 
 	public float m_maxSpeed = 2.0f;
 	// Use this for initialization
@@ -18,13 +18,17 @@ public class ProjectileScript : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other){
 		if(other.tag == "Player"){
+			Debug.Log ("aaa");
 			Destroy(this.gameObject);
 		}
 	}
 
 	[RPC]
 	public void RemoteProjectileRotation(int turnAngle){
-		Quaternion tmpRotation = transform.rotation;
+		Vector3 tmpRotation = transform.localEulerAngles;
 		tmpRotation.z += turnAngle;
+		transform.localEulerAngles = tmpRotation;
+
+		Debug.Log (transform.rotation.z + "");
 	}
 }

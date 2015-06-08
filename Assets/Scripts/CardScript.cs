@@ -30,20 +30,20 @@ public class CardScript : Photon.MonoBehaviour {
 
 		m_GameManager = GameObject.Find("GameManager");
 
-		Quaternion tmpRotation;
+		Vector3 tmpRotation;
 		switch (m_cardType) {
 		case CardType.Arrow:
 			GetComponent<SpriteRenderer>().sprite = m_sprites[0];
-			tmpRotation = transform.rotation;
-			tmpRotation.z = -90.0f;
-			transform.rotation = tmpRotation;
+			tmpRotation = transform.localEulerAngles;
+			tmpRotation.z = 0.0f;
+			transform.localEulerAngles = tmpRotation;
 			photonView.RPC ("ShootProjectile", PhotonTargets.AllViaServer, new object[]{});
 			break;
 		case CardType.Mirror:
 			GetComponent<SpriteRenderer>().sprite = m_sprites[1];
-			tmpRotation = transform.rotation;
+			tmpRotation = transform.localEulerAngles;
 			tmpRotation.z = -90.0f;
-			transform.rotation = tmpRotation;
+			transform.localEulerAngles = tmpRotation;
 			break;
 		}
 
@@ -51,7 +51,7 @@ public class CardScript : Photon.MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update(){
-		if(m_GameManager.GetComponent<GameManager>().endTurn()){
+		if(m_GameManager.GetComponent<GameManager>().endTurn() && m_cardType == CardType.Arrow){
 			photonView.RPC ("ShootProjectile", PhotonTargets.AllViaServer, new object[]{});
 		}
 
@@ -63,7 +63,7 @@ public class CardScript : Photon.MonoBehaviour {
 	[RPC]
 	void ShootProjectile(){
 		if(!hasShot){
-			Instantiate (projectile, this.transform.position, Quaternion.identity);
+			PhotonNetwork.Instantiate("Projectile", transform.position, Quaternion.identity, 0);
 			hasShot = true;
 		}
 	}
