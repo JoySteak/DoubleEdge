@@ -35,7 +35,7 @@ public class CardScript : Photon.MonoBehaviour {
 		case CardType.Arrow:
 			GetComponent<SpriteRenderer>().sprite = m_sprites[0];
 			tmpRotation = transform.localEulerAngles;
-			tmpRotation.z = 0.0f;
+			tmpRotation.z = -90.0f;
 			transform.localEulerAngles = tmpRotation;
 			photonView.RPC ("ShootProjectile", PhotonTargets.AllViaServer, new object[]{});
 			break;
@@ -63,7 +63,9 @@ public class CardScript : Photon.MonoBehaviour {
 	[RPC]
 	void ShootProjectile(){
 		if(!hasShot){
-			PhotonNetwork.Instantiate("Projectile", transform.position, Quaternion.identity, 0);
+			//Quaternion rotation = Quaternion.identity;
+			//rotation.eulerAngles = transform.rotation.eulerAngles;
+			PhotonNetwork.Instantiate("Projectile", transform.position, Quaternion.Euler(0, 0, this.transform.localEulerAngles.z), 0);
 			hasShot = true;
 		}
 	}
