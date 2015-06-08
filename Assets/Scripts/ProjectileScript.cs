@@ -15,4 +15,10 @@ public class ProjectileScript : MonoBehaviour {
 		rigidbody2D.velocity = new Vector2 (m_maxSpeed, rigidbody2D.velocity.y);
 	
 	}
+
+	void OnTriggerEnter2D(Collider2D other){
+		if(other.tag == "Player"){
+			Destroy(this.gameObject);
+		}
+	}
 }
