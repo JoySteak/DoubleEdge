@@ -37,7 +37,8 @@ public class Player : Photon.MonoBehaviour {
 				Vector3 position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 				position.z = 0;
 				position = new Vector3(Mathf.Round(position.x/3)*3,Mathf.Round(position.y/3)*3,0);
-				PhotonNetwork.RPC(photonView, "MasterClientInstantiateCard", PhotonTargets.MasterClient, true, new object[]{position});
+				if(photonView.isMine)
+					photonView.RPC("MasterClientInstantiateCard", PhotonTargets.MasterClient, new object[]{position});
 				hasPlaced = true; //tell GameManager that this player has placed
 			}
 		}
