@@ -6,6 +6,7 @@ public class ProjectileScript : Photon.MonoBehaviour {
 	public float m_maxSpeed = 2.0f;
 
 	public float m_rotationAngle = 0.0f;
+	public Vector3 m_cardCenterColliderPosition = Vector3.zero;
 	// Use this for initialization
 	void Start(){
 	
@@ -77,16 +78,20 @@ public class ProjectileScript : Photon.MonoBehaviour {
 
 			if(tmpParentCardScript.m_cardType != CardScript.CardType.Mirror)
 				return;
-
+			m_cardCenterColliderPosition = other.gameObject.GetComponent<BoxCollider2D>().bounds.center;
 			RemoteProjectileRotation();
 		}
 	}
 
 	void RemoteProjectileRotation(){
 		Vector3 tmpRotation = transform.localEulerAngles;
+
 		tmpRotation.z += m_rotationAngle;
 		transform.localEulerAngles = tmpRotation;
 
+		transform.position = m_cardCenterColliderPosition; 
+
+		m_cardCenterColliderPosition = Vector3.zero;
 		m_rotationAngle = 0.0f;
 	}
 }
