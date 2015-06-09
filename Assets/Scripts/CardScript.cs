@@ -5,6 +5,7 @@ public class CardScript : Photon.MonoBehaviour {
 
 	bool hasShot = false;
 	public GameObject projectile = null;
+	GameObject m_PoolManager = null;
 	GameObject m_GameManager = null;
 
 	public enum CardType{
@@ -44,6 +45,7 @@ public class CardScript : Photon.MonoBehaviour {
 		m_mirrorType = (MirrorType)photonView.instantiationData [2];
 
 		m_GameManager = GameObject.Find("GameManager");
+		m_PoolManager = GameObject.Find("PoolManager");
 	
 
 		Vector3 tmpRotation = transform.localEulerAngles;
@@ -120,7 +122,12 @@ public class CardScript : Photon.MonoBehaviour {
 	[RPC]
 	void RemoteShootProjectile(){
 		if(!hasShot){
-			PhotonNetwork.Instantiate("Projectile", transform.position, Quaternion.Euler(0, 0, this.transform.localEulerAngles.z), 0);
+			var projectile = m_PoolManager.GetComponent<PoolManager>().GetBullet();
+			var tempRotation = Quaternion.Euler(0,0,this.transform.localEulerAngles.z);
+			projectile.transform.position = this.transform.position;
+			projectile.transform.rotation = tempRotation;
+			projectile.SetActive(true);
+			//PhotonNetwork.Instantiate("Projectile", transform.position, Quaternion.Euler(0, 0, this.transform.localEulerAngles.z), 0);
 			hasShot = true;
 		}
 	}

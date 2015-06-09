@@ -11,15 +11,15 @@ public class ProjectileScript : Photon.MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update(){
-
-		rigidbody2D.velocity = this.transform.rotation*  new Vector3 (m_maxSpeed, 0,0) ;
+		if(gameObject.activeSelf)
+			rigidbody2D.velocity = this.transform.rotation*  new Vector3 (m_maxSpeed, 0,0) ;
 	
 	
 	}
 
 	void OnTriggerEnter2D(Collider2D other){
 		if(other.tag == "ProjectileDestroyer"){
-			Destroy(this.gameObject);
+			gameObject.SetActive(false);
 		}
 	}
 
