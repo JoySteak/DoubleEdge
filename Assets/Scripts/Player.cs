@@ -26,8 +26,23 @@ public class Player : Photon.MonoBehaviour {
 		player = (PlayerCount)photonView.instantiationData[0];
 		SetUpPlayerPosition (player);
 
-		GameManager.current.players.Add(gameObject);
-		Debug.Log ("Call");
+		GameObject[] tmpPlayers = GameObject.FindGameObjectsWithTag("Player");
+
+		if(photonView.isMine)
+			GameManager.current.players.Add(this.gameObject);
+
+		for(int i = 0; i < tmpPlayers.Length; i++) {
+			for(int j = 0; j < GameManager.current.players.Count; j++){
+				if(GameManager.current.players[j].GetHashCode() != tmpPlayers[i].GetHashCode()){
+					//Debug.Log(tmpPlayers[i]);
+					GameManager.current.players.Add(tmpPlayers[i]);
+				}
+			}
+		}
+//		GameManager.current.players.Add(this.gameObject);
+
+		Debug.Log ("Player - " + (int) player);
+		//Debug.Log ("Call");
 	}
 
 	void OnGUI(){
@@ -99,7 +114,7 @@ public class Player : Photon.MonoBehaviour {
 			}
 		}
 
-		if(!hasPlaced){
+		if(hasPlaced == false){
 		//0 is left click
 		//1 is right click
 			if(Input.GetMouseButtonDown(0)){
@@ -127,6 +142,7 @@ public class Player : Photon.MonoBehaviour {
 
 		switch (player) {
 		case PlayerCount.One:
+			transform.name ="PlayerOne";
 			scale = new Vector3(tmpHorGridObj.transform.localScale.x, 
 	                            0.5f,
 	                            tmpHorGridObj.transform.localScale.z);
@@ -139,6 +155,7 @@ public class Player : Photon.MonoBehaviour {
 			transform.position = position;
 			break;
 		case PlayerCount.Two:
+			transform.name ="PlayerTwo";
 			scale = new Vector3(0.5f, 
 			                    tmpVerGridObj.transform.localScale.y,
 			                    tmpVerGridObj.transform.localScale.z);
@@ -151,6 +168,7 @@ public class Player : Photon.MonoBehaviour {
 			transform.position = position;
 			break;
 		case PlayerCount.Three:
+			transform.name ="PlayerThree";
 			scale = new Vector3(tmpHorGridObj.transform.localScale.x, 
 			                    0.5f,
 			                    tmpHorGridObj.transform.localScale.z);
@@ -163,6 +181,7 @@ public class Player : Photon.MonoBehaviour {
 			transform.position = position;
 			break;
 		case PlayerCount.Four:
+			transform.name ="PlayerFour";
 			scale = new Vector3(0.5f, 
 			                    tmpVerGridObj.transform.localScale.y,
 			                    tmpVerGridObj.transform.localScale.z);

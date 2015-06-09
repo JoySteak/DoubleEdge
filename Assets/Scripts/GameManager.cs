@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour {
 
 	public static GameManager current;
 	public List<GameObject> players = new List<GameObject>();
+	public float turncheckTimer = 2f;
+	public float turncheckMax = 2f;
 
 	void Awake(){
 		current = this;
@@ -19,12 +21,20 @@ public class GameManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update(){
 
+		//decrease timer
+
+		//if
 		if(endTurn()){
+		 	turncheckTimer -= Time.deltaTime;
+			if(turncheckTimer <= 0){
+				Debug.Log ("TIMER OVER");
 			// Check for projectile in hiereachy
-			if(GameObject.FindGameObjectWithTag("Projectile") == null){
-				Debug.Log ("Finished shooting");
-				for(int i=0;i<players.Count;i++){
-					players[i].GetComponent<Player>().hasPlaced = false;
+				if(GameObject.FindGameObjectWithTag("Projectile") == null){
+					for(int i=0;i<players.Count;i++){
+						players[i].GetComponent<Player>().hasPlaced = false;
+					}
+					turncheckTimer = turncheckMax;
+					Debug.Log ("CAN PLACE");
 				}
 			}
 		}
@@ -41,13 +51,14 @@ public class GameManager : MonoBehaviour {
 	public bool endTurn(){
 		for(int i =0; i< players.Count; i++){
 			bool m_hasPlaced = players[i].GetComponent<Player>().hasPlaced;
-			if(!m_hasPlaced){
-				Debug.Log ("Not endturn");
+			Debug.Log (players[i]);
+			if(m_hasPlaced == false){
+				Debug.Log (players.Count);
 				return false;
 			}
 		}
 
-		Debug.Log("Ended turn");
+		Debug.Log("ENDED TURN");
 		return true;
 	}
 }
