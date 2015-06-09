@@ -123,16 +123,6 @@ public class CardScript : Photon.MonoBehaviour {
 
 //		if(photonView.isMine)
 //			photonView.RPC ("RemoteShootProjectile", PhotonTargets.AllViaServer, new object[]{});
-		RemoteShootProjectile ();
-
-	}
-
-	void ToggleHasShot(){
-		hasShot = false;
-	}
-
-	[RPC]
-	void RemoteShootProjectile(){
 		if(!hasShot){
 			var projectile = m_PoolManager.GetComponent<PoolManager>().GetBullet();
 			var tempRotation = Quaternion.Euler(0,0,this.transform.localEulerAngles.z);
@@ -143,7 +133,14 @@ public class CardScript : Photon.MonoBehaviour {
 			//PhotonNetwork.Instantiate("Projectile", transform.position, Quaternion.Euler(0, 0, this.transform.localEulerAngles.z), 0);
 			hasShot = true;
 		}
+
 	}
+
+	void ToggleHasShot(){
+		hasShot = false;
+	}
+
+
 
 	[RPC]
 	void RemoteSetupCard(int spriteType, Vector3 rotation){
