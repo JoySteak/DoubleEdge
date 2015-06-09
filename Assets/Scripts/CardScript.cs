@@ -65,7 +65,6 @@ public class CardScript : Photon.MonoBehaviour {
 				break;
 			}
 			photonView.RPC("RemoteSetupCard", PhotonTargets.AllViaServer, new object[]{0, tmpRotation});
-//			ShootProjectile();
 		} else {
 			switch (m_mirrorType) {
 			case MirrorType.One:
@@ -87,7 +86,8 @@ public class CardScript : Photon.MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update(){
-		if(m_GameManager.GetComponent<GameManager>().endTurn() && m_cardType == CardType.Arrow){
+
+		if (m_GameManager.GetComponent<GameManager> ().m_turnEnd) {
 			ShootProjectile();
 		}
 
@@ -107,17 +107,19 @@ public class CardScript : Photon.MonoBehaviour {
 
 	}
 
-	void ShootProjectile(){
+	public void ShootProjectile(){
+		if (m_cardType != CardType.Arrow)
+			return;
+
 		m_rotationAngle = 0.0f;
+
 		if(photonView.isMine)
-			photonView.RPC ("RemoteShootProjectile", PhotonTargets.AllViaServer, new object[]{});
+			photonView.RPC ("RemoteShootProjectile", PhotonTargets.MasterClient, new object[]{});
 	}
 
 	[RPC]
 	void RemoteShootProjectile(){
 		if(!hasShot){
-			//Quaternion rotation = Quaternion.identity;
-			//rotation.eulerAngles = transform.rotation.eulerAngles;
 			PhotonNetwork.Instantiate("Projectile", transform.position, Quaternion.Euler(0, 0, this.transform.localEulerAngles.z), 0);
 			hasShot = true;
 		}

@@ -28,21 +28,16 @@ public class Player : Photon.MonoBehaviour {
 
 		GameObject[] tmpPlayers = GameObject.FindGameObjectsWithTag("Player");
 
-		if(photonView.isMine)
-			GameManager.current.players.Add(this.gameObject);
-
-		for(int i = 0; i < tmpPlayers.Length; i++) {
-			for(int j = 0; j < GameManager.current.players.Count; j++){
-				if(GameManager.current.players[j].GetHashCode() != tmpPlayers[i].GetHashCode()){
-					//Debug.Log(tmpPlayers[i]);
-					GameManager.current.players.Add(tmpPlayers[i]);
+		if (photonView.isMine) {
+			GameManager.current.players.Add (this.gameObject);
+		}
+		else {
+			for(int i = 0; i < tmpPlayers.Length; i++) {
+				if(GameManager.current.players[i].GetHashCode() != this.gameObject.GetHashCode()){
+					GameManager.current.players.Add(this.gameObject);
 				}
 			}
 		}
-//		GameManager.current.players.Add(this.gameObject);
-
-		Debug.Log ("Player - " + (int) player);
-		//Debug.Log ("Call");
 	}
 
 	void OnGUI(){
@@ -121,9 +116,10 @@ public class Player : Photon.MonoBehaviour {
 				Vector3 position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 				position.z = 0;
 				position = new Vector3(Mathf.Round(position.x/3)*3,Mathf.Round(position.y/3)*3,0);
-				if(photonView.isMine)
+				if(photonView.isMine) {
 					photonView.RPC("MasterClientInstantiateCard", PhotonTargets.MasterClient, new object[]{position, (int)m_cardType, (int)m_arrowType, (int)m_mirrorType});
-				hasPlaced = true; //tell GameManager that this player has placed
+					photonView.RPC("ToggleHasPlaced", PhotonTargets.AllBufferedViaServer, null);
+				}
 			}
 		}
 	}
@@ -194,6 +190,11 @@ public class Player : Photon.MonoBehaviour {
 			transform.position = position;
 			break;
 		}
+	}
+
+	[RPC]
+	void ToggleHasPlaced(){
+		hasPlaced = !hasPlaced; //tell GameManager that this player has placed
 	}
 
 	[RPC]

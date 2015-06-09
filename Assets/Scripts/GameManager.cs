@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour {
 	public float turncheckTimer = 2f;
 	public float turncheckMax = 2f;
 
+	public bool m_turnEnd = false;
+
 	void Awake(){
 		current = this;
 	}
@@ -21,24 +23,14 @@ public class GameManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update(){
 
-		//decrease timer
-
-		//if
-		if(endTurn()){
-		 	turncheckTimer -= Time.deltaTime;
-			if(turncheckTimer <= 0){
-				Debug.Log ("TIMER OVER");
-			// Check for projectile in hiereachy
-				if(GameObject.FindGameObjectWithTag("Projectile") == null){
-					for(int i=0;i<players.Count;i++){
-						players[i].GetComponent<Player>().hasPlaced = false;
-					}
-					turncheckTimer = turncheckMax;
-					Debug.Log ("CAN PLACE");
-				}
+		if(GameObject.FindGameObjectWithTag("Projectile") == null && m_turnEnd){
+			for(int i=0;i<players.Count;i++){
+				players[i].GetComponent<Player>().hasPlaced = false;
 			}
+			m_turnEnd = false;
 		}
 
+		TurnCheck();
 
 		//check if all players has placed
 		//change can place into false(handled in player)
@@ -48,17 +40,16 @@ public class GameManager : MonoBehaviour {
 		//change can has placed into false
 	}
 
-	public bool endTurn(){
-		for(int i =0; i< players.Count; i++){
-			bool m_hasPlaced = players[i].GetComponent<Player>().hasPlaced;
-			Debug.Log (players[i]);
-			if(m_hasPlaced == false){
-				Debug.Log (players.Count);
-				return false;
-			}
+	public void TurnCheck(){
+		for (int i = 0; i < players.Count; i++) {
+			bool hasPlaced = players[i].GetComponent<Player>().hasPlaced;
+
+			// If any player has not placed a card return
+			if(hasPlaced == false)
+				return;
 		}
 
-		Debug.Log("ENDED TURN");
-		return true;
+		// Else set turnEnd to true
+		m_turnEnd = true;
 	}
 }
