@@ -103,15 +103,15 @@ public class CardScript : Photon.MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D other){
-		if (other.tag != "Projectile")
-			return;
-
-		if (m_projectileRef != other.gameObject)
-			return;
-
-		other.GetComponent<ProjectileScript>().RemoteProjectileRotation(m_rotationAngle);
-
-		m_projectileRef = null;
+//		if (other.tag != "Projectile")
+//			return;
+//
+//		if (m_projectileRef != other.gameObject)
+//			return;
+//
+//		other.GetComponent<ProjectileScript>().RemoteProjectileRotation(m_rotationAngle);
+//
+//		m_projectileRef = null;
 
 	}
 
@@ -138,6 +138,7 @@ public class CardScript : Photon.MonoBehaviour {
 			var tempRotation = Quaternion.Euler(0,0,this.transform.localEulerAngles.z);
 			projectile.transform.position = this.transform.position;
 			projectile.transform.rotation = tempRotation;
+			projectile.GetComponent<ProjectileScript>().m_rotationAngle = 0.0f;
 			projectile.SetActive(true);
 			//PhotonNetwork.Instantiate("Projectile", transform.position, Quaternion.Euler(0, 0, this.transform.localEulerAngles.z), 0);
 			hasShot = true;

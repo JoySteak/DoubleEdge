@@ -4,6 +4,8 @@ using System.Collections;
 public class ProjectileScript : Photon.MonoBehaviour {
 
 	public float m_maxSpeed = 2.0f;
+
+	public float m_rotationAngle = 0.0f;
 	// Use this for initialization
 	void Start(){
 	
@@ -21,12 +23,70 @@ public class ProjectileScript : Photon.MonoBehaviour {
 		if(other.tag == "ProjectileDestroyer"){
 			gameObject.SetActive(false);
 		}
+
+		if(other.tag == "CardColliders"){
+			CardColliderScript tmpCardColliderScript = other.gameObject.GetComponent<CardColliderScript>();
+			CardScript tmpParentCardScript = other.gameObject.GetComponentInParent<CardScript>();
+
+			if(tmpParentCardScript.m_cardType != CardScript.CardType.Mirror)
+				return;
+
+			// Only if mirror do the following checks
+			switch(tmpCardColliderScript.m_cardColliderType){
+			case CardColliderScript.CardColliderType.East:
+				if(tmpParentCardScript.m_mirrorType == CardScript.MirrorType.One) {
+					m_rotationAngle = 90.0f;
+				}
+				if(tmpParentCardScript.m_mirrorType == CardScript.MirrorType.Two) {
+					m_rotationAngle = -270.0f;
+				}
+				if(tmpParentCardScript.m_mirrorType == CardScript.MirrorType.Three) {
+					m_rotationAngle = 90.0f;
+				}
+				if(tmpParentCardScript.m_mirrorType == CardScript.MirrorType.Four) {
+					m_rotationAngle = 90.0f;
+				}
+				break;
+			case CardColliderScript.CardColliderType.South:
+				if(tmpParentCardScript.m_mirrorType == CardScript.MirrorType.One) {
+					m_rotationAngle = -90.0f;
+				}
+				if(tmpParentCardScript.m_mirrorType == CardScript.MirrorType.Two) {
+					m_rotationAngle = -90.0f;
+				}
+				if(tmpParentCardScript.m_mirrorType == CardScript.MirrorType.Three) {
+					m_rotationAngle = -90.0f;
+				}
+				if(tmpParentCardScript.m_mirrorType == CardScript.MirrorType.Four) {
+					m_rotationAngle = -90.0f;
+				}
+				break;
+			case CardColliderScript.CardColliderType.West:
+				m_rotationAngle = 0.0f;
+				break;
+			case CardColliderScript.CardColliderType.North:
+				m_rotationAngle = 0.0f;
+				break;
+			}
+		}
+
+		if (other.tag == "CardCenterCollider") {
+
+			CardColliderScript tmpCardColliderScript = other.gameObject.GetComponent<CardColliderScript>();
+			CardScript tmpParentCardScript = other.gameObject.GetComponentInParent<CardScript>();
+
+			if(tmpParentCardScript.m_cardType != CardScript.CardType.Mirror)
+				return;
+
+			RemoteProjectileRotation();
+		}
 	}
 
-	[RPC]
-	public void RemoteProjectileRotation(float turnAngle){
+	void RemoteProjectileRotation(){
 		Vector3 tmpRotation = transform.localEulerAngles;
-		tmpRotation.z += turnAngle;
+		tmpRotation.z += m_rotationAngle;
 		transform.localEulerAngles = tmpRotation;
+
+		m_rotationAngle = 0.0f;
 	}
 }

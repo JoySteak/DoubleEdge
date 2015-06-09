@@ -23,48 +23,48 @@ public class CardColliderScript : MonoBehaviour
 	
 	}
 
-	void OnTriggerEnter2D(Collider2D other){
-		if(m_parentCardScript.m_cardType == CardScript.CardType.Mirror && other.tag == "Projectile"){
-			m_parentCardScript.m_projectileRef = other.gameObject;
-
-			// Only if mirror do the following checks
-			switch(m_cardColliderType){
-			case CardColliderType.East:
-				if(m_parentCardScript.m_mirrorType == CardScript.MirrorType.One) {
-					m_parentCardScript.m_rotationAngle = 90.0f;
-				}
-				if(m_parentCardScript.m_mirrorType == CardScript.MirrorType.Two) {
-					m_parentCardScript.m_rotationAngle = -270.0f;
-				}
-				if(m_parentCardScript.m_mirrorType == CardScript.MirrorType.Three) {
-					m_parentCardScript.m_rotationAngle = 90.0f;
-				}
-				if(m_parentCardScript.m_mirrorType == CardScript.MirrorType.Four) {
-					m_parentCardScript.m_rotationAngle = 90.0f;
-				}
-				break;
-			case CardColliderType.South:
-				if(m_parentCardScript.m_mirrorType == CardScript.MirrorType.One) {
-					m_parentCardScript.m_rotationAngle = -90.0f;
-				}
-				if(m_parentCardScript.m_mirrorType == CardScript.MirrorType.Two) {
-					m_parentCardScript.m_rotationAngle = -90.0f;
-				}
-				if(m_parentCardScript.m_mirrorType == CardScript.MirrorType.Three) {
-					m_parentCardScript.m_rotationAngle = -90.0f;
-				}
-				if(m_parentCardScript.m_mirrorType == CardScript.MirrorType.Four) {
-					m_parentCardScript.m_rotationAngle = -90.0f;
-				}
-				break;
-			case CardColliderType.West:
-
-				break;
-			case CardColliderType.North:
-
-				break;
-			}
-
-		}
+	void OnTriggerExit2D(Collider2D other){
+//		if(m_parentCardScript.m_cardType == CardScript.CardType.Mirror && other.tag == "Projectile"){
+//			m_parentCardScript.m_projectileRef = other.gameObject;
+//
+//			// Only if mirror do the following checks
+//			switch(m_cardColliderType){
+//			case CardColliderType.East:
+//				if(m_parentCardScript.m_mirrorType == CardScript.MirrorType.One) {
+//					m_parentCardScript.m_rotationAngle = 90.0f;
+//				}
+//				if(m_parentCardScript.m_mirrorType == CardScript.MirrorType.Two) {
+//					m_parentCardScript.m_rotationAngle = -270.0f;
+//				}
+//				if(m_parentCardScript.m_mirrorType == CardScript.MirrorType.Three) {
+//					m_parentCardScript.m_rotationAngle = 90.0f;
+//				}
+//				if(m_parentCardScript.m_mirrorType == CardScript.MirrorType.Four) {
+//					m_parentCardScript.m_rotationAngle = 90.0f;
+//				}
+//				break;
+//			case CardColliderType.South:
+//				if(m_parentCardScript.m_mirrorType == CardScript.MirrorType.One) {
+//					m_parentCardScript.m_rotationAngle = -90.0f;
+//				}
+//				if(m_parentCardScript.m_mirrorType == CardScript.MirrorType.Two) {
+//					m_parentCardScript.m_rotationAngle = -90.0f;
+//				}
+//				if(m_parentCardScript.m_mirrorType == CardScript.MirrorType.Three) {
+//					m_parentCardScript.m_rotationAngle = -90.0f;
+//				}
+//				if(m_parentCardScript.m_mirrorType == CardScript.MirrorType.Four) {
+//					m_parentCardScript.m_rotationAngle = -90.0f;
+//				}
+//				break;
+//			case CardColliderType.West:
+//
+//				break;
+//			case CardColliderType.North:
+//
+//				break;
+//			}
+//
+//		}
 	}
 }
