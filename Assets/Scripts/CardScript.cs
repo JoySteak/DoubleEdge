@@ -32,7 +32,9 @@ public class CardScript : Photon.MonoBehaviour {
 	public ArrowType m_arrowType = ArrowType.One;
 	public MirrorType m_mirrorType = MirrorType.One;
 
-	public Sprite[] m_sprites = new Sprite[2]; 
+	public Sprite[] m_sprites = new Sprite[2];
+
+	public float m_rotationAngle = 0.0f;
 
 	// Use this for initialization
 	void Start(){
@@ -94,7 +96,19 @@ public class CardScript : Photon.MonoBehaviour {
 
 	}
 
+	void OnTriggerEnter2D(Collider2D other){
+		Debug.Log ("collided");
+		if (other.tag != "Projectile")
+			return;
+
+		other.GetComponent<PhotonView>().RPC("RemoteProjectileRotation", 
+		                                     PhotonTargets.AllViaServer, 
+		                                     new object[]{m_rotationAngle});
+
+	}
+
 	void ShootProjectile(){
+		m_rotationAngle = 0.0f;
 		if(photonView.isMine)
 			photonView.RPC ("RemoteShootProjectile", PhotonTargets.AllViaServer, new object[]{});
 	}
