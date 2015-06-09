@@ -25,6 +25,8 @@ public class CardColliderScript : MonoBehaviour
 
 	void OnTriggerEnter2D(Collider2D other){
 		if(m_parentCardScript.m_cardType == CardScript.CardType.Mirror && other.tag == "Projectile"){
+			m_parentCardScript.m_projectileRef = other.gameObject;
+
 			// Only if mirror do the following checks
 			switch(m_cardColliderType){
 			case CardColliderType.East:

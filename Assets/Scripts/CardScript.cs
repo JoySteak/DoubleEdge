@@ -8,6 +8,8 @@ public class CardScript : Photon.MonoBehaviour {
 	GameObject m_PoolManager = null;
 	GameObject m_GameManager = null;
 
+	public GameObject m_projectileRef;
+
 	public enum CardType{
 		Arrow = 0,
 		Mirror
@@ -90,7 +92,9 @@ public class CardScript : Photon.MonoBehaviour {
 	void Update(){
 
 		if (m_GameManager.GetComponent<GameManager> ().m_turnEnd) {
-			ShootProjectile();
+			ShootProjectile ();
+		} else {
+			ToggleHasShot();
 		}
 
 		//if all players hasplaced
@@ -99,13 +103,15 @@ public class CardScript : Photon.MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D other){
-		Debug.Log ("collided");
 		if (other.tag != "Projectile")
 			return;
 
-		other.GetComponent<PhotonView>().RPC("RemoteProjectileRotation", 
-		                                     PhotonTargets.AllViaServer, 
-		                                     new object[]{m_rotationAngle});
+		if (m_projectileRef != other.gameObject)
+			return;
+
+		other.GetComponent<ProjectileScript>().RemoteProjectileRotation(m_rotationAngle);
+
+		m_projectileRef = null;
 
 	}
 
@@ -115,8 +121,14 @@ public class CardScript : Photon.MonoBehaviour {
 
 		m_rotationAngle = 0.0f;
 
-		if(photonView.isMine)
-			photonView.RPC ("RemoteShootProjectile", PhotonTargets.MasterClient, new object[]{});
+//		if(photonView.isMine)
+//			photonView.RPC ("RemoteShootProjectile", PhotonTargets.AllViaServer, new object[]{});
+		RemoteShootProjectile ();
+
+	}
+
+	void ToggleHasShot(){
+		hasShot = false;
 	}
 
 	[RPC]

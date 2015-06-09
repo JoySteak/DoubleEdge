@@ -6,10 +6,10 @@ public class GameManager : MonoBehaviour {
 
 	public static GameManager current;
 	public List<GameObject> players = new List<GameObject>();
-	public float turncheckTimer = 2f;
-	public float turncheckMax = 2f;
 
 	public bool m_turnEnd = false;
+
+	public GameObject m_poolManager;
 
 	void Awake(){
 		current = this;
@@ -23,7 +23,15 @@ public class GameManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update(){
 
-		if(GameObject.FindGameObjectWithTag("Projectile") == null && m_turnEnd){
+		if(m_turnEnd){
+
+			List<GameObject> tmpPool = m_poolManager.GetComponent<PoolManager>().m_pool;
+			for(int i = 0; i < tmpPool.Count; i++){
+				if(tmpPool[i].activeSelf){
+					return;
+				}
+			}
+
 			for(int i=0;i<players.Count;i++){
 				players[i].GetComponent<Player>().hasPlaced = false;
 			}
