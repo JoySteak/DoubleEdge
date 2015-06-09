@@ -29,33 +29,74 @@ public class Player : Photon.MonoBehaviour {
 		GameManager.current.players.Add(gameObject);
 		Debug.Log ("Call");
 	}
+
+	void OnGUI(){
+		if (photonView.isMine) {
+			string tmpString = "";
+			switch (m_cardType) {
+			case CardScript.CardType.Arrow:
+
+				tmpString += "Arrow - ";
+
+				if (m_arrowType == CardScript.ArrowType.One) {
+					tmpString += " One";
+				} else if (m_arrowType == CardScript.ArrowType.Two) {
+					tmpString += " Two";
+				} else if (m_arrowType == CardScript.ArrowType.Three) {
+					tmpString += " Three";
+				} else if (m_arrowType == CardScript.ArrowType.Four) {
+					tmpString += " Four";
+				}
+				break;
+			case CardScript.CardType.Mirror:
+
+				tmpString += "Mirror - ";
+			
+				if (m_mirrorType == CardScript.MirrorType.One) {
+					tmpString += " One";
+				} else if (m_mirrorType == CardScript.MirrorType.Two) {
+					tmpString += " Two";
+				} else if (m_mirrorType == CardScript.MirrorType.Three) {
+					tmpString += " Three";
+				} else if (m_mirrorType == CardScript.MirrorType.Four) {
+					tmpString += " Four";
+				}
+				break;
+			}
+			GUI.Label (new Rect (Screen.width * 0.7f, 5.0f, 200.0f, 50.0f),
+		           tmpString);
+		}
+	}
 	
 	// Update is called once per frame
 	void Update(){
 		//check (from GameManager?) if it's at the placing phase
-		if(Input.GetKeyDown(KeyCode.C) && m_cardType == CardScript.CardType.Arrow){
-			m_cardType = CardScript.CardType.Mirror;
-		}else if(Input.GetKeyDown(KeyCode.C) && m_cardType == CardScript.CardType.Mirror){
-			m_cardType = CardScript.CardType.Arrow;
-		}
+
+		if (photonView.isMine) {
+			if (Input.GetKeyDown (KeyCode.C) && m_cardType == CardScript.CardType.Arrow) {
+				m_cardType = CardScript.CardType.Mirror;
+			} else if (Input.GetKeyDown (KeyCode.C) && m_cardType == CardScript.CardType.Mirror) {
+				m_cardType = CardScript.CardType.Arrow;
+			}
 		
-		if(Input.GetKeyDown(KeyCode.Alpha1) && m_cardType == CardScript.CardType.Arrow){
-			m_arrowType = CardScript.ArrowType.One;
-		}else if(Input.GetKeyDown(KeyCode.Alpha2) && m_cardType == CardScript.CardType.Arrow){
-			m_arrowType = CardScript.ArrowType.Two;
-		}else if(Input.GetKeyDown(KeyCode.Alpha3) && m_cardType == CardScript.CardType.Arrow){
-			m_arrowType = CardScript.ArrowType.Three;
-		}else if(Input.GetKeyDown(KeyCode.Alpha4) && m_cardType == CardScript.CardType.Arrow){
-			m_arrowType = CardScript.ArrowType.Four;
-		}
-		if(Input.GetKeyDown(KeyCode.Alpha1) && m_cardType == CardScript.CardType.Mirror){
-			m_mirrorType = CardScript.MirrorType.One;
-		}else if(Input.GetKeyDown(KeyCode.Alpha2) && m_cardType == CardScript.CardType.Mirror){
-			m_mirrorType = CardScript.MirrorType.Two;
-		}else if(Input.GetKeyDown(KeyCode.Alpha3) && m_cardType == CardScript.CardType.Mirror){
-			m_mirrorType = CardScript.MirrorType.Three;
-		}else if(Input.GetKeyDown(KeyCode.Alpha4) && m_cardType == CardScript.CardType.Mirror){
-			m_mirrorType = CardScript.MirrorType.Four;
+			if (Input.GetKeyDown (KeyCode.Alpha1) && m_cardType == CardScript.CardType.Arrow) {
+				m_arrowType = CardScript.ArrowType.One;
+			} else if (Input.GetKeyDown (KeyCode.Alpha2) && m_cardType == CardScript.CardType.Arrow) {
+				m_arrowType = CardScript.ArrowType.Two;
+			} else if (Input.GetKeyDown (KeyCode.Alpha3) && m_cardType == CardScript.CardType.Arrow) {
+				m_arrowType = CardScript.ArrowType.Three;
+			} else if (Input.GetKeyDown (KeyCode.Alpha4) && m_cardType == CardScript.CardType.Arrow) {
+				m_arrowType = CardScript.ArrowType.Four;
+			}
+			if (Input.GetKeyDown (KeyCode.Alpha1) && m_cardType == CardScript.CardType.Mirror) {
+				m_mirrorType = CardScript.MirrorType.One;
+			} else if (Input.GetKeyDown (KeyCode.Alpha2) && m_cardType == CardScript.CardType.Mirror) {
+				m_mirrorType = CardScript.MirrorType.Two;
+			} else if (Input.GetKeyDown (KeyCode.Alpha3) && m_cardType == CardScript.CardType.Mirror) {
+				m_mirrorType = CardScript.MirrorType.Three;
+			} else if (Input.GetKeyDown (KeyCode.Alpha4) && m_cardType == CardScript.CardType.Mirror) {
+				m_mirrorType = CardScript.MirrorType.Four;
+			}
 		}
 
 		if(!hasPlaced){
@@ -66,7 +107,7 @@ public class Player : Photon.MonoBehaviour {
 				position.z = 0;
 				position = new Vector3(Mathf.Round(position.x/3)*3,Mathf.Round(position.y/3)*3,0);
 				if(photonView.isMine)
-					photonView.RPC("MasterClientInstantiateCard", PhotonTargets.MasterClient, new object[]{position});
+					photonView.RPC("MasterClientInstantiateCard", PhotonTargets.MasterClient, new object[]{position, (int)m_cardType, (int)m_arrowType, (int)m_mirrorType});
 				hasPlaced = true; //tell GameManager that this player has placed
 			}
 		}
@@ -137,11 +178,11 @@ public class Player : Photon.MonoBehaviour {
 	}
 
 	[RPC]
-	void MasterClientInstantiateCard(Vector3 position){
+	void MasterClientInstantiateCard(Vector3 position, int cardType, int arrowType, int mirrorType){
 		PhotonNetwork.InstantiateSceneObject("Card", 
 		                                     position, 
 		                                     Quaternion.identity, 
 		                                     0, 
-		                                     new object[]{(int)m_cardType, (int)m_arrowType, (int)m_mirrorType,});
+		                                     new object[]{cardType, arrowType, mirrorType});
 	}
 }
