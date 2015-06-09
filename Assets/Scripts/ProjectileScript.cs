@@ -24,7 +24,7 @@ public class ProjectileScript : Photon.MonoBehaviour {
 	}
 
 	[RPC]
-	public void RemoteProjectileRotation(int turnAngle){
+	public void RemoteProjectileRotation(float turnAngle){
 		Vector3 tmpRotation = transform.localEulerAngles;
 		tmpRotation.z += turnAngle;
 		transform.localEulerAngles = tmpRotation;
