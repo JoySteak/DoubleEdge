@@ -37,6 +37,8 @@ public class Player : Photon.MonoBehaviour {
 				}
 			}
 		}
+
+		photonView.RPC ("MasterClientInstantiatePLayerIndicator", PhotonTargets.MasterClient, null);
 	}
 
 	void OnGUI(){
@@ -126,6 +128,13 @@ public class Player : Photon.MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other){
 		//detect if other is a "laser"
 		//if so, minus one hp
+
+		if (other.tag != "Projectile")
+			return;
+
+		if (photonView.isMine) {
+			photonView.RPC ("MasterClientHealthChanges", PhotonTargets.MasterClient, new object[]{-1});
+		}
 	}
 
 	void SetUpPlayerPosition(PlayerCount player){
@@ -203,5 +212,25 @@ public class Player : Photon.MonoBehaviour {
 		                                     Quaternion.identity, 
 		                                     0, 
 		                                     new object[]{cardType, arrowType, mirrorType});
+	}
+
+	[RPC]
+	void MasterClientHealthChanges(int healthChanges){
+
+		if (!photonView.isMine)
+			return;
+
+		GameObject[] tmpPlayerIndicators = GameObject.FindGameObjectsWithTag("PlayerIndicator");
+
+		for (int i = 0; i < tmpPlayerIndicators.Length; i++) {
+			if(tmpPlayerIndicators[i].GetPhotonView().isMine)
+				tmpPlayerIndicators[i].GetPhotonView().RPC("RemoteHealthUpdate", PhotonTargets.AllBufferedViaServer, new object[]{healthChanges});
+		}
+	}
+
+	
+	[RPC]
+	void MasterClientInstantiatePLayerIndicator(){
+		PhotonNetwork.InstantiateSceneObject ("PlayerIndicator", Vector3.zero, Quaternion.identity, 0, new object[]{(int)player});
 	}
 }
