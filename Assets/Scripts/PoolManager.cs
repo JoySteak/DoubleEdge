@@ -41,7 +41,6 @@ public class PoolManager : MonoBehaviour
 		{
 			if(m_pool[i].activeSelf == false)
 			{
-				//m_pool[i].SetActive(true);
 				return m_pool[i];
 			}
 			

@@ -73,17 +73,16 @@ public class ProjectileScript : Photon.MonoBehaviour {
 
 		if (other.tag == "CardCenterCollider") {
 
-			CardColliderScript tmpCardColliderScript = other.gameObject.GetComponent<CardColliderScript>();
 			CardScript tmpParentCardScript = other.gameObject.GetComponentInParent<CardScript>();
 
 			if(tmpParentCardScript.m_cardType != CardScript.CardType.Mirror)
 				return;
 			m_cardCenterColliderPosition = other.gameObject.GetComponent<BoxCollider2D>().bounds.center;
-			RemoteProjectileRotation();
+			ProjectileRotation();
 		}
 	}
 
-	void RemoteProjectileRotation(){
+	void ProjectileRotation(){
 		Vector3 tmpRotation = transform.localEulerAngles;
 
 		tmpRotation.z += m_rotationAngle;

@@ -20,7 +20,6 @@ public class Player : Photon.MonoBehaviour {
 	public CardScript.ArrowType m_arrowType;
 	public CardScript.MirrorType m_mirrorType;
 
-	//public Camera camera;
 	// Use this for initialization
 	void Start(){
 		player = (PlayerCount)photonView.instantiationData[0];

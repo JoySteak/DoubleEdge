@@ -103,15 +103,6 @@ public class CardScript : Photon.MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D other){
-//		if (other.tag != "Projectile")
-//			return;
-//
-//		if (m_projectileRef != other.gameObject)
-//			return;
-//
-//		other.GetComponent<ProjectileScript>().RemoteProjectileRotation(m_rotationAngle);
-//
-//		m_projectileRef = null;
 
 	}
 
@@ -121,8 +112,6 @@ public class CardScript : Photon.MonoBehaviour {
 
 		m_rotationAngle = 0.0f;
 
-//		if(photonView.isMine)
-//			photonView.RPC ("RemoteShootProjectile", PhotonTargets.AllViaServer, new object[]{});
 		if(!hasShot){
 			var projectile = m_PoolManager.GetComponent<PoolManager>().GetBullet();
 			var tempRotation = Quaternion.Euler(0,0,this.transform.localEulerAngles.z);
@@ -130,7 +119,6 @@ public class CardScript : Photon.MonoBehaviour {
 			projectile.transform.rotation = tempRotation;
 			projectile.GetComponent<ProjectileScript>().m_rotationAngle = 0.0f;
 			projectile.SetActive(true);
-			//PhotonNetwork.Instantiate("Projectile", transform.position, Quaternion.Euler(0, 0, this.transform.localEulerAngles.z), 0);
 			hasShot = true;
 		}
 
